@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { toArray } from 'rxjs/operators';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { credentials } from '@grpc/grpc-js';
+
 interface ProductoRequest { id: number; }
 interface FiltroPrecioRequest { precioMaximo: number; }
 interface ProductoResponse { id: number; nombre: string; precio: number; }
@@ -25,7 +27,11 @@ export class AppController implements OnModuleInit {
     options: {
       package: 'productos',
       protoPath: join(import.meta.dirname, 'productos.proto'),
-      url: process.env.GRPC_URL || 'localhost:5000', // Apunta al servicio gRPC privado
+      url: process.env.GRPC_URL || 'localhost:5000',
+      // Si la URL tiene el puerto 443 (nube), usamos SSL. Si no (local), inseguro.
+      credentials: process.env.GRPC_URL && process.env.GRPC_URL.includes('443') 
+        ? credentials.createSsl() 
+        : credentials.createInsecure(),
     },
   })
   private client: ClientGrpc;
