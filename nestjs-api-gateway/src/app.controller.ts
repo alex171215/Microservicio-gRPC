@@ -27,11 +27,8 @@ export class AppController implements OnModuleInit {
     options: {
       package: 'productos',
       protoPath: join(import.meta.dirname, 'productos.proto'),
-      url: process.env.GRPC_URL || 'localhost:5000',
-      // Si la URL tiene el puerto 443 (nube), usamos SSL. Si no (local), inseguro.
-      credentials: process.env.GRPC_URL && process.env.GRPC_URL.includes('443') 
-        ? credentials.createSsl() 
-        : credentials.createInsecure(),
+      url: process.env.GRPC_URL || '127.0.0.1:10001',
+      credentials: credentials.createInsecure(),
     },
   })
   private client: ClientGrpc;

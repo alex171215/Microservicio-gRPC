@@ -1,4 +1,11 @@
 {
+  "name": "microservicio-grpc-completo",
+  "version": "1.0.0",
+  "scripts": {
+    "install:all": "npm --prefix nestjs-productos-grpc install && npm --prefix nestjs-api-gateway install",
+    "build": "npm --prefix nestjs-productos-grpc run build && npm --prefix nestjs-api-gateway run build",
+    "start": "node nestjs-productos-grpc/dist/main & node nestjs-api-gateway/dist/main"
+  },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.5",
     "@grpc/proto-loader": "^0.8.1",
