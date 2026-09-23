@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
 import { status } from '@grpc/grpc-js';
 import { Observable } from 'rxjs';
@@ -9,6 +9,10 @@ interface FiltroPrecioRequest { precioMaximo: number; }
 
 @Controller()
 export class AppController {
+  @Get('health')
+  health() {
+    return { status: 'ok' };
+  }
   private readonly productos: ProductoResponse[] = [
     { id: 1, nombre: 'Teclado mecánico', precio: 45.90 },
     { id: 2, nombre: 'Mouse inalámbrico', precio: 19.50 },
