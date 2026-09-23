@@ -6,10 +6,12 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
     transport: Transport.GRPC,
+    // En main.ts, modifica el apartado options:
     options: {
       package: 'productos',
       protoPath: join(__dirname, 'productos.proto'),
-      url: '0.0.0.0:5000',
+      // Agrega esto: process.env.PORT || '5000'
+      url: `0.0.0.0:${process.env.PORT || 5000}`,
     },
   });
   await app.listen();
